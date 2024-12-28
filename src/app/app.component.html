@@ -1,0 +1,32 @@
+
+<div style="text-align:center">
+  <h1>
+    welcome Mr.{{title}}!
+
+    <!-- if we see the flow of execution then app template gets rendered first and in the
+     app comp we have imported test comp which is used in this template using <app-test>
+      selector, now if we want to send some data from app to test comp then we use
+      [parentData] = "var name" it shows that this var/data is sent from app to test comp.-->
+
+    <!--event variable contains the data passed via emit().
+        The emitted data will be assigned/bind to the message property in the app component.  -->
+    <app-test (childEvent)="message = $event" [parentData]="sendMsg"></app-test>
+
+    {{message}}
+  </h1>
+
+  <!-- Routing -->
+
+  <h1>Angular Router App</h1>
+<nav>
+  <ul>
+    <li><a routerLink="/first-component" routerLinkActive="active">First Component</a></li>
+    <li><a routerLink="/second-component" routerLinkActive="active">Second Component</a></li>
+  </ul>
+</nav>
+
+<!-- The routed views render in the <router-outlet>-->
+<router-outlet></router-outlet>
+
+
+</div>

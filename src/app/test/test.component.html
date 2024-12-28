@@ -1,0 +1,174 @@
+<!-- when we bind data from class to template it is called interpolation and the prop or func
+ of the class is always passed in double curly braces inside the template-->
+
+<!-- properties/variables interpolation -->
+<p>{{title}}</p>
+<h4>right now learning -> {{current_topic}}</h4>
+
+<!-- func interpolation -->
+<h4>{{greet()}}</h4>
+
+<!-- we can use js prop and methods here as well such as -->
+<h4>{{current_topic.length}}</h4>
+
+<!-- interpolation works by converting data to string so for 
+    conditions or bool purposes we use prop binding -->
+<!-- we are binding the disabled property of button attribute to class data
+    that's why it is called prop binding-->
+
+<!-- the property always comes in square brackets [] -->
+<input [disabled] = "isDisabled" type="text" value="write here">
+
+<!-- class binding -->
+
+<!-- 1. we always use [] outside class, successClass is the name of var which is storing
+ the actual class name that is defind in css -->
+<h2 [class]="successClass">class binding</h2> 
+
+<!-- 2. this is condition based class binding, if the has error var is true then only
+ the text-danger class effects will take place. -->
+<h2 [class.text-danger]="hasError">condition class binding</h2>
+
+<!-- 3. we can show effect of multiple classes at once by creating a object of classes
+ in which there will be multiple key(class) value(true) pairs, all those classes
+ which have their values set to true will show their effects.-->
+<!-- IMP - ngClass is a directive which is provided by commmonmodule, so make sure
+ to import it in ts file and then add to imports array of decorator-->
+<h2 [ngClass]="multipleClasses">multiple class effects at once</h2>
+
+<!-- style binding -->
+
+<!-- it is used for inline css effects -->
+ <h3 [style.color]="'orange'">style binding 1</h3>
+
+<!-- we can also import this orange or any color from a class var dynamically -->
+<h3 [style.color]="colorName">style binding 2</h3>
+
+<!-- we can do conditional style binding as well, if the val of hasError is true
+ then green color will be used otherwise red -->
+<h3 [style.color]="hasError ? 'green' : 'red' ">style binding 3</h3>
+
+<!-- next is ngStyles which is a directive same as ngClass -->
+<h3 [ngStyle]="multipleStyles">multiple styles at once inline</h3>
+
+<!-- event binding -->
+ 
+<!-- in event binding we want data to flow from template to class which is opp
+ of what we did in data binding -->
+<!-- event always comes inside (), when we click on button onClick func is fired
+ which is defined under class  -->
+<button (click)="onClick()">Greet 1</button>
+{{greeting1}}
+
+<!-- if the msg on click event is small we can define it here as well by interpolation
+ and changing the value of var on click right here -->
+<button (click)="greeting2 = 'hey buddy!'">Greet 2</button>
+{{greeting2}}
+
+<!-- 2 way data binding -->
+
+<!-- data flow from class to template and template to class, need to import FormsModule
+ in comp ts file for this.-->
+<!-- we use [] for class to template data flow, () for template to class hence in 2 way
+ data binding we use [()] - remember by banana inside a box  -->
+<br>
+<input [(ngModel)]="name" type="text"> 
+{{name}}
+
+<!-- IMP - In angular, The view is defined in the HTML template and is responsible for presenting data 
+ and capturing user interactions. It is tightly bound to the component class -->
+
+<!-- Key Features of view:
+
+{{ title }}: Interpolation for displaying model data.
+[(ngModel)]: Two-way data binding (requires FormsModule).
+(click)="sayHello()": Event binding for capturing user actions. -->
+
+<!-- Structural Directives -->
+
+<!-- These are 3 -  ngIf, ngSwitch and ngFor-->
+<!-- These are used to add or remove html elements from DOM -->
+
+<!-- ngIf, syntax is *directiveName -->
+<!-- ngIf is used for conditional rendering of view/template -->
+
+<!-- code flow - ngIf check its val if its true then ifBlock code is run, now where is this ifBlock
+ , we find this by referencing that ifBlock with # so that it can be found by ngIf, if its false
+ then elseBlock is run -->
+<div *ngIf="directiveValue; then ifBlock; else elseBlock"></div>
+
+<!-- this # is used for template referencing -->
+<ng-template #ifBlock>
+    <h2>We are learning structural directives</h2>
+</ng-template>
+
+<ng-template #elseBlock>
+    <h2> what we are learning is hidden!</h2>
+</ng-template>
+
+<!-- ngSwitch -->
+<!--  is used for conditionally displaying elements based on a single expression's value. -->
+<div [ngSwitch]="colorSelected">
+    <div *ngSwitchCase="'red'">you have choosen red color</div>
+    <div *ngSwitchCase="'blue'">you have choosen blue color</div>
+    <div *ngSwitchCase="'green'">you have choosen green color</div>
+    <div *ngSwitchDefault="'red'">pick valid color</div>
+</div>
+
+<!--  single quotes inside double quotes are used to define string literals/pass string values directly. -->
+<!-- Without single quotes, Angular assumes the value is a variable in the component's class. -->
+
+<!-- ngFor -->
+<!-- see degree as i var which iterates over each element in degrees array from start to last-->
+<div *ngFor="let degree of degrees, index as i">
+    <h2>{{i}} {{degree}}</h2>
+</div>
+
+<!-- input() decorator use -  -->
+<h3>{{msgImported}}</h3>
+
+
+<!-- ouput() decorator - make use of events -->
+<button (click)="runClick()">press button</button>
+<br>
+
+<!-- pipes in angular-->
+
+<!-- why use pipes -->
+<!-- They are functions that accept an input value, process it, and return a transformed value. 
+ Pipes are typically used in Angular templates to format or transform data displayed to the user. -->
+
+<!-- where to use pipes -->
+<!-- Pipes are used in Angular templates. You can apply them in:
+
+Interpolation: Inside {{ ... }} syntax.
+Property Binding: To transform data bound to properties.
+Structural Directives: Within *ngFor, etc. -->
+
+<!-- syntax of pipe -> {{ InputValue | pipeName: 'arg1'}}
+ -->
+
+<h3>{{myName | uppercase}}</h3>
+<h3>{{myName | lowercase}}</h3>
+
+<!-- starting index of myName will be 3 -->
+<h3>{{myName | slice:3}}</h3>
+
+<!-- 1- my digits, 3 - min decimal digits -->
+<h3>{{7.21 | number: '1.3-5'}}</h3>
+<h3>{{0.72 | percent}}</h3>
+<h3>{{200 | currency: 'EUR'}}</h3>
+
+<h3>{{date | date:'short'}}</h3>
+<h3>{{date | date:'shortTime'}}</h3>
+
+<!-- The pipe operator only changes the val for the view, it doesn't change the val of prop in class -->
+
+<!-- dsiplay the employees data fetched from the employee service -->
+<h3> Employee Details</h3>
+
+<h3>{{errMsg}}</h3>
+
+<ul *ngFor="let employee of employees">
+    <li class="align-li">{{employee.id}}. {{employee.name}} - {{employee.age}}</li>
+</ul>

@@ -1,0 +1,12 @@
+.text-green {
+    color: green;
+}
+.text-danger {
+    color: red;
+}
+.text-special {
+    font-style: italic;
+}
+.align-li {
+    text-align: left;
+}
